@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 // Bean
@@ -20,6 +22,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id; // to allow id to be null value (not possible for 'int'), for when record is
                 // being created, id is still null.
+
+    @OneToOne(mappedBy = "product")
+    private Cart cart;
 
     @Column(nullable = false) // to prevent value from being null. Default is nullable.
     String name;

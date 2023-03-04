@@ -59,8 +59,12 @@ public class ProductController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Product> delete(@PathVariable int id) {
-        repo.deleteById(id);
-        return ResponseEntity.noContent().build();
+        Optional<Product> optional = (Optional<Product>) repo.findById(id);
+        if(optional.isPresent()){
+            repo.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
