@@ -51,16 +51,24 @@ public class ProductController {
     public ResponseEntity<Product> update(@RequestBody Product product, @PathVariable int id) {
         Optional<Product> optional = (Optional<Product>) repo.findById(id);
         if (optional.isPresent()) {
-            product.setId(id);
-            return ResponseEntity.ok().body(repo.save(product));
+            try {
+                Product p = optional.get();
+                p.setName(product.getName());
+                p.setDescription(product.getDescription());
+                p.setPrice(product.getPrice());
+                return ResponseEntity.ok().body(repo.save(product));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.badRequest().build();
+            }
         }
         return ResponseEntity.notFound().build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Product> delete(@PathVariable int id) {
-        Optional<Product> optional = (Optional<Product>) repo.findById(id);
-        if(optional.isPresent()){
+        Optional<Product> optional = (Optional<Product>) repo.findById(id); //can also use repo.existsById() -> returns boolean.
+        if (optional.isPresent()) {
             repo.deleteById(id);
             return ResponseEntity.noContent().build();
         }

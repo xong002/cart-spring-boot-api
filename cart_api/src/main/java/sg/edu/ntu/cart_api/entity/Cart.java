@@ -1,6 +1,10 @@
 package sg.edu.ntu.cart_api.entity;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,16 +14,38 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="cart")
+@Table(name = "cart")
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    @OneToOne //(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id") //, referencedColumnName = "id")
+    Product product;
+
+    @Column(name = "quantity")
+    Integer quantity =1;
+
+    @Column(name = "created_at", updatable = false)
+    Timestamp createdAt = new Timestamp(new Date().getTime());
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Integer getCartId() {
         return id;
@@ -36,5 +62,5 @@ public class Cart {
     public void setProduct(Product product) {
         this.product = product;
     }
-   
+
 }
