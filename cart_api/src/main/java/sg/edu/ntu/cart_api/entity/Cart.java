@@ -30,6 +30,17 @@ public class Cart {
 
     @Column(name = "created_at", updatable = false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
+    
+    @Column(name="user_id")
+    Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Timestamp getCreatedAt() {
         return createdAt;

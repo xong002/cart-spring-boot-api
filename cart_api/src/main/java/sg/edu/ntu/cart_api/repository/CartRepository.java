@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import sg.edu.ntu.cart_api.entity.Cart;
 
 @Repository
-public interface CartRepository extends CrudRepository<Cart, Integer>{
-    Optional<Cart> findByProductId(Integer id);
+public interface CartRepository extends CrudRepository<Cart, Integer> {
+
+    Optional<Cart> findByProductIdAndUserId(int productId, int userId);
+
+    List<Cart> findByUserId(int userId);
 }
